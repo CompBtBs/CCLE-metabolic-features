@@ -1,62 +1,92 @@
-Welcome to the CCLE-metabolic-features wiki!
+# CCLE-metabolic-features
 
-Computatioanl Approach We use a generic metabolic network graph. The metabolic network can be any standard metabolic network. But we reconstructed our own metabolic network (ENGRO2\cite{di2022integrate}) of about 500 reactions. We run the approach also for the genome-wide metabolic networks Recon3D of about 11000 reactions. We set differential constraints (flux boundaries) according to gene-expression data (and nutrients) of a given cell \cite{di2022integrate}.
+Welcome to the `CCLE-metabolic-features` wiki!
 
-We can sample the obtained feasible region. Different sampling techniques can be used. We use CHRR or CBS (\cite{galuzzi2024adjusting}) This repository includes both the samples and summary statistics.
+---
 
-Beyond summary statistics, we also have the correlation of each reaction flux with biomass that could be a good proxy to predict essentiality. We call it sensitivity.
+## 🧠 Computational Approach
 
-In alternative to sampling, we can also optimize for growth and perform deletion simulations. We provide the simulated deletion effect as feature. We call it KO.
+We use a generic metabolic network graph. The network can be any standard metabolic network, but we reconstructed our own compact network **ENGRO2** (Damiani et al., 2022), consisting of ~500 reactions.  
+We also run the pipeline for the **genome-wide Recon3D** network (~11,000 reactions).
 
-section{Node labels} NNotice that we have labels for only a subset of the cell lines for which we generated the features.
+Flux boundaries (i.e., differential constraints) are applied based on gene expression and nutrient data specific to each cell line (Damiani et al., 2022).
 
-The cell lines gene expression data use to generate the features were taken from \href{https://sites.broadinstitute.org/ccle/}{CCLEA}.
+We then sample the feasible solution space using either:
+- **CHRR**
+- **CBS** (Galuzzi et al., 2024)
 
-For the labels, we used the DEPMAP database \href{https://depmap.org/portal/}{CCLEA}. The scores can have different normalizations.
+This repository includes both raw samples and summary statistics.
 
-We used either the CERES normalized score that exist for many cells and gecko scores that exist for a smaller subset of cells (\cite{meyers2017computational}). We are not really familiar yet with the different normalization, but it involves using also other omics, likely that's why some normalization are not available for all cells.
+Beyond summary statistics, we compute the **sensitivity** of each reaction, defined as the correlation between its flux and biomass production. This serves as a proxy to predict essentiality.
 
-Given that the labels are associated to the node, we need different labels if we change the graph.
+Alternatively, we can simulate gene knockouts by optimizing for biomass and evaluating the **KO (knockout) effect**. These results are also provided as features.
 
-We converted the CERES gene scores into reactions scores by takin the minimum score for genes in AND, the maximum for genes on OR.
+---
 
-Given that scFEA network aggregates reactions into modules, we need a label for the modules. So we took the minimums score among the reactions in the modules. we assume that given that a module is a linear chain of reactions, if almost one is essential than the entire module its essential.
+## 🧷 Node Labels
 
-📁 Data Folder Structure
-This repository contains data for different metabolic graphs and their associated features, labels, and stoichiometric matrices. Below is an overview of the organization of the Data folder.
+> ⚠️ Labels are available only for a subset of the cell lines for which we generated features.
 
-🔹 ENGRO2 Graph
-Stoichiometric matrix file
-(Extracted using COBRApy functions from the SBML model)
+- **Gene expression data** come from the [CCLE portal](https://sites.broadinstitute.org/ccle/).
+- **Essentiality labels** come from the [DepMap portal](https://depmap.org/portal/), including:
+  - **CERES normalized scores**
+  - **GECKO scores** (available for a smaller subset)
 
-Feature folder
-Contains various flux sampling and sensitivity analyses:
+For generating reaction labels:
+- **CERES**: gene-level scores are converted to reaction-level:
+  - `min()` for AND relationships
+  - `max()` for OR relationships
+- **scFEA**: modules use the `min()` score among their reactions, since modules represent reaction chains where a single essential step can be decisive
 
-All sampled fluxes (CHRR)
-All sampled fluxes (CBS)
-Sampled statistics (mean, median, mode) - CBS
-Sampled statistics (mean, median, mode) - CHRR
-Sensitivity analysis - CBS
-Sensitivity analysis - CHRR
-Knockout (KO) simulation results
-Label folder
+---
 
-CERES normalized scores
-GECKO normalized scores
-🔹 RECON 3D Graph (genome-wide)
-Stoichiometric matrix file
-(Extracted using COBRApy functions from the SBML model)
+## 📁 Data Folder Structure
 
-Feature folder
+This repository contains data for different metabolic graphs and their associated features, labels, and stoichiometric matrices.
 
-All sampled fluxes (CHRR)
-All sampled fluxes (CBS)
-Sampled statistics (mean, median, mode) - CBS
-Sampled statistics (mean, median, mode) - CHRR
-Sensitivity analysis - CBS
-Sensitivity analysis - CHRR
-KO simulation results
-Label folder
+### 🔹 `ENGRO2` Graph
 
-CERES normalized scores
-GECKO normalized scores
+- **Stoichiometric matrix file**  
+  *(Extracted using COBRApy functions)*
+
+- **Feature folder**
+  - All sampled fluxes (CHRR)
+  - All sampled fluxes (CBS)
+  - Sampled statistics (mean, median, mode) – CBS
+  - Sampled statistics (mean, median, mode) – CHRR
+  - Sensitivity analysis – CBS
+  - Sensitivity analysis – CHRR
+  - Knockout (KO) simulation results
+
+- **Label folder**
+  - CERES normalized scores
+  - GECKO normalized scores
+
+### 🔹 `RECON 3D` Graph (genome-wide)  
+_Coming soon_
+
+- **Stoichiometric matrix file**  
+  *(Extracted using COBRApy functions)*
+
+- **Feature folder**
+  - All sampled fluxes (CHRR)
+  - All sampled fluxes (CBS)
+  - Sampled statistics (mean, median, mode) – CBS
+  - Sampled statistics (mean, median, mode) – CHRR
+  - Sensitivity analysis – CBS
+  - Sensitivity analysis – CHRR
+  - KO simulation results
+
+- **Label folder**
+  - CERES normalized scores
+  - GECKO normalized scores
+
+---
+
+## 📚 References
+
+Please update these with your actual BibTeX entries in `references.bib`:
+
+- Damiani, C. et al. (2022). *Title ENGRO2 reconstruction*. Journal.
+- Galuzzi, B. G. et al. (2024). *Adjusting sampling bias in metabolic flux analysis*.
+- Meyers, R. M. et al. (2017). *CRISPR essentiality screens (CERES normalization)*.
