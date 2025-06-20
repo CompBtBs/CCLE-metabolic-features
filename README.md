@@ -84,7 +84,5 @@ _Coming soon_
 
 ## 📚 References
 
-Please update these with your actual BibTeX entries in `references.bib`:
-
 - Di Filippo, Marzia, et al. "INTEGRATE: Model-based multi-omics data integration to characterize multi-level metabolic regulation." PLoS computational biology 18.2 (2022): e1009337.
 - Galuzzi, B. G. et al. (2024). Adjusting for false discoveries in constraint-based differential metabolic flux analysis. Journal of Biomedical Informatics, 150, 104597.
