@@ -6,10 +6,10 @@ Welcome to the `CCLE-metabolic-features` wiki!
 
 ## 🧠 Computational Approach
 
-We use a generic metabolic network graph. The network can be any standard metabolic network, but we reconstructed our own compact network **ENGRO2** (Damiani et al., 2022), consisting of ~500 reactions.  
+We use a generic metabolic network graph. The network can be any standard metabolic network, but we reconstructed our own compact network **ENGRO2** (Di Filippo et al., 2022), consisting of ~500 reactions.  
 We also run the pipeline for the **genome-wide Recon3D** network (~11,000 reactions).
 
-Flux boundaries (i.e., differential constraints) are applied based on gene expression and nutrient data specific to each cell line (Damiani et al., 2022).
+Flux boundaries (i.e., differential constraints) are applied based on gene expression and nutrient data specific to each cell line (Di Filippo et al., 2022).
 
 We then sample the feasible solution space using either:
 - **CHRR**
@@ -36,7 +36,6 @@ For generating reaction labels:
 - **CERES**: gene-level scores are converted to reaction-level:
   - `min()` for AND relationships
   - `max()` for OR relationships
-- **scFEA**: modules use the `min()` score among their reactions, since modules represent reaction chains where a single essential step can be decisive
 
 ---
 
@@ -87,6 +86,5 @@ _Coming soon_
 
 Please update these with your actual BibTeX entries in `references.bib`:
 
-- Damiani, C. et al. (2022). *Title ENGRO2 reconstruction*. Journal.
-- Galuzzi, B. G. et al. (2024). *Adjusting sampling bias in metabolic flux analysis*.
-- Meyers, R. M. et al. (2017). *CRISPR essentiality screens (CERES normalization)*.
+- Di Filippo, Marzia, et al. "INTEGRATE: Model-based multi-omics data integration to characterize multi-level metabolic regulation." PLoS computational biology 18.2 (2022): e1009337.
+- Galuzzi, B. G. et al. (2024). Adjusting for false discoveries in constraint-based differential metabolic flux analysis. Journal of Biomedical Informatics, 150, 104597.
